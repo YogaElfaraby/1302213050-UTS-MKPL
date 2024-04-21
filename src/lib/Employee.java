@@ -1,7 +1,6 @@
 package lib;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,11 +25,10 @@ public class Employee {
 	private int otherMonthlyIncome;
 	private int annualDeductible;
 	
-	private String spouseName;
-	private String spouseIdNumber;
+	private spouse spouse;
+    private List<String> childNames;
+    private List<String> childIdNumbers;
 
-	private List<String> childNames;
-	private List<String> childIdNumbers;
 	
 	public Employee(String employeeId, String firstName, String lastName, String idNumber, String address, int yearJoined, int monthJoined, int dayJoined, boolean isForeigner, boolean isMale) {
 		this.employeeId = employeeId;
@@ -83,18 +81,17 @@ public class Employee {
         }
     }
 	
-	public void setAnnualDeductible(int deductible) {	
+	public void setAnnualDeductible(int deductible) {
 		this.annualDeductible = deductible;
 	}
 	
-	public void setAdditionalIncome(int income) {	
+	public void setAdditionalIncome(int income) {
 		this.otherMonthlyIncome = income;
 	}
 	
 	public void setSpouse(String spouseName, String spouseIdNumber) {
-		this.spouseName = spouseName;
-		this.spouseIdNumber = idNumber;
-	}
+        this.spouse = new spouse(spouseName, spouseIdNumber);
+    }
 	
 	public void addChild(String childName, String childIdNumber) {
 		childNames.add(childName);
@@ -112,6 +109,6 @@ public class Employee {
 			monthWorkingInYear = 12;
 		}
 		
-		return TaxFunction.calculateTax(monthlySalary, otherMonthlyIncome, monthWorkingInYear, annualDeductible, spouseIdNumber.equals(""), childIdNumbers.size());
-	}
+		return TaxFunction.calculateTax(monthlySalary, otherMonthlyIncome, monthWorkingInYear, annualDeductible, spouse.hasNoSpouse(), childIdNumbers.size());
+    }
 }
